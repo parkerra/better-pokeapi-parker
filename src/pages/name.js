@@ -1,22 +1,20 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
+import React, { useState } from "react"
 
 const fetcher = async (url) => {
     const res = await axios.get(url)
     return res.data
 }
 
-export default function Name() {
-    let pokemon = "pikachu"
-    // let { data, error, isLoading, isValidating } = useSWR("/api/pokemon/pikachu", fetcher)
-    let { data, error, isLoading, isValidating } = useSWR("/api/pokemon/" + pokemon, fetcher)
+function Name(props) {
+    let { data, error, isLoading, isValidating } = useSWR("/api/pokemon/" + props.pokemon, fetcher)
 
     if (isLoading) return <div>Loading</div>
     if (!data) return (
         <>
-            <Link href="/"><h1>Better PokeAPI</h1></Link>
-            <h2>Must Implement your API. Data is empty</h2>
+            <h2>Invalid Pokemon name!</h2>
         </>
     )
 
@@ -24,13 +22,6 @@ export default function Name() {
 
     return (
         <>
-            {/* {console.log("SOMETHING IS HAPPENING")} */}
-            <h1><Link href="/">Better PokeAPI</Link></h1>
-            <input type="text" id="pokemonInput" name="name" />
-            {/* <h2>{pokemonInput.value}</h2> */}
-            {/* {console.log("SOMETHING IS HAPPENING")} */}
-            {/* {console.log(pokemon)} */}
-            {/* {pokemon = pokemonInput.pokemon} */}
             {isValidating ? (
                 <h2>Validating</h2>
             ) : (
@@ -40,6 +31,39 @@ export default function Name() {
                     <h2>Types: {types.map(type => <span>{type} </span>)}</h2>
                 </>
             )}
+        </>
+    )
+}
+
+export default function App() {
+    const [ pokemon, setPokemon ] = useState("pikachu")
+    const [ textInput, setTextInput ] = useState("")
+
+    return (
+        <>
+            <h1><Link href="/">Better PokeAPI</Link></h1>
+
+            <input type="text" value={textInput}
+                onChange={(event) => {
+                    setTextInput(event.target.value)
+                }}
+                onKeyDown={(event) => {
+                    if (event.key === "Enter") {
+                        setPokemon(textInput.toLowerCase())
+                        setTextInput("")
+                    }
+                }}
+            />
+
+            <button type="submit" 
+                onSubmit={(event) => {
+                    setPokemon(textInput.toLowerCase())
+                    setTextInput("")
+                }}>
+                Search
+            </button>
+
+            { Name({ pokemon: pokemon }) }
         </>
     )
 }
