@@ -8,9 +8,12 @@ export default async function handler(request, response) {
             
             const experience = {experience: growthResults["data"]["levels"][request.query.level - 1]["experience"]}
 
+            response.status(200)
+
             return response.send(experience)
 
         } catch (error) {
+            response.status(400)
             return response.send("There has been an error! Please reload the page and try again.")
         }
     }
