@@ -17,6 +17,7 @@ function getFetcher(pokemon1, pokemon2) {
     return fetcher
 }
 
+
 function Battle(props) {
     // pokemon1Input = props.pokemon1
     // pokemon2Input = props.pokemon2
@@ -24,32 +25,35 @@ function Battle(props) {
     // console.log(pokemon1Input)
     // console.log(pokemon2Input)
 
-    console.log("before")
+    // console.log("before")
     const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, getFetcher(props.pokemon1, props.pokemon2))
-    console.log(isLoading)
-    console.log(isValidating)
-    console.log(error)
-    console.log("after")
-    console.log(data)
+    // const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, () => {
 
-    console.log("before loading")
+    // }) //getFetcher(props.pokemon1, props.pokemon2))
+    // console.log(isLoading)
+    // console.log(isValidating)
+    // console.log(error)
+    // console.log("after")
+    // console.log(data)
+
+    // console.log("before loading")
     if (isLoading) return <div>Loading</div>
     if (!data) return (
         <>
             <h2>One or more Pokemon names are invalid!</h2>
         </>
     )
-    console.log("after loading")
+    // console.log("after loading")
 
-    console.log(data)
+    // console.log(data)
     let { winner } = data
-    console.log(winner)
-    console.log("THIS LINE IS PRINTING")
+    // console.log(winner)
+    // console.log("THIS LINE IS PRINTING")
 
     return (
         <>
             <h2>Battle: {props.pokemon1} vs. {props.pokemon2}</h2>
-
+            {isLoading ? <h2>LMAO</h2> : <h2>is not loading</h2>}
             {isValidating ? (
                 <h2>Validating</h2>
             ) : (
@@ -66,7 +70,8 @@ export default function App() {
     const [ inputPokemon1, setInputPokemon1 ] = useState("")
     const [ pokemon2, setPokemon2 ] = useState("lucario")
     const [ inputPokemon2, setInputPokemon2 ] = useState("")
-
+    // const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, getFetcher(props.pokemon1, props.pokemon2))
+    
     return (
         <>
             {console.log("proof console log works")}
