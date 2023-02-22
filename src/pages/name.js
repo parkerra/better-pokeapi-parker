@@ -55,8 +55,8 @@ export default function App() {
                 }}
             />
 
-            <button type="submit" 
-                onSubmit={(event) => {
+            <button type="button" 
+                onClick={() => {
                     setPokemon(textInput.toLowerCase())
                     setTextInput("")
                 }}>
