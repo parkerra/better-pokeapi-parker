@@ -1,7 +1,6 @@
 import axios from "axios";
 
 export default async function handler(request, response) {
-    console.log("SOMETHING IS HAPPENING")
     if (request.method == "GET") {
         try {
             const results = await axios.get("https://pokeapi.co/api/v2/pokemon-species/" + request.query.name)

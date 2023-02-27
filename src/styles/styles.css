@@ -1,6 +1,7 @@
 body {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
+
 a {
     display: block;
     padding: 10px 10px 20px;
@@ -9,4 +10,8 @@ a {
     border-radius: 5px;
     text-decoration: none;
     color: black;
+}
+
+.search-box {
+    width: 75%;
 }

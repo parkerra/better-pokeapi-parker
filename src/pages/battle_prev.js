@@ -1,9 +1,9 @@
 import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
-import React, { useState } from "react"
+import React, { useState, render } from "react"
 
-const getFetcher = (pokemon1, pokemon2) => {
+function getFetcher(pokemon1, pokemon2) {
     const fetcher = async (url) => {
         const res = await axios.post(url, {
             pokemon1: pokemon1,
@@ -14,15 +14,54 @@ const getFetcher = (pokemon1, pokemon2) => {
     return fetcher
 }
 
+/*
+const fetcher = async (url, pokemon1, pokemon2) => {
+    const res = await axios.post(url, {
+        pokemon1: pokemon1,
+        pokemon2: pokemon2
+    })
+    return res.data
+}
+*/
+
+
+function Battle(props) {
+    const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, getFetcher(props.pokemon1, props.pokemon2))
+    
+    if (isLoading) return <div>Loading</div>
+    if (!data) return (
+        <>
+            <h2>One or more Pokemon names are invalid!</h2>
+        </>
+    )
+
+    let { winner } = data
+
+    return (
+        <>
+            <h2>Battle: {props.pokemon1} vs. {props.pokemon2}</h2>
+            {isLoading ? <h2>LMAO</h2> : <h2>is not loading</h2>}
+            {isValidating ? (
+                <h2>Validating</h2>
+            ) : (
+                <>
+                    <h2>Winner: {winner}</h2>
+                </>
+            )}
+        </>
+    )
+}
+
 export default function App() {
     const [ pokemon1, setPokemon1 ] = useState("pikachu")
     const [ inputPokemon1, setInputPokemon1 ] = useState("")
     const [ pokemon2, setPokemon2 ] = useState("lucario")
     const [ inputPokemon2, setInputPokemon2 ] = useState("")
-    const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, getFetcher(pokemon1, pokemon2), { refreshInterval: 1000, keepPreviousData: false })
+    // const { data, error, isLoading, isValidating } = useSWR(`/api/battle/`, getFetcher(props.pokemon1, props.pokemon2))
     
     return (
         <>
+            {console.log("proof console log works")}
             <h1><Link href="/">Better PokeAPI</Link></h1>
 
             <input type="text" value={inputPokemon1}
@@ -41,7 +80,6 @@ export default function App() {
                         setInputPokemon1("")
                         setPokemon2(inputPokemon2.toLowerCase())
                         setInputPokemon2("")
-                        // setSearched(true)
                     }
                 }}
             />
@@ -52,19 +90,13 @@ export default function App() {
                     setInputPokemon1("")
                     setPokemon2(inputPokemon2.toLowerCase())
                     setInputPokemon2("")
-                    // setSearched(true)
                 }}>
                 Search
             </button>
 
-            <h2>Battle: {pokemon1} vs. {pokemon2}</h2>
+            {console.log("about to run battle")}
 
-            {!data && typeof data !== undefined ? (
-                    <h2>Winner: Loading...</h2>
-                ) : (
-                    <h2>Winner: {data["winner"]}</h2>
-                )
-            }
+            { Battle({ pokemon1: pokemon1, pokemon2: pokemon2 }) }
         </>
     )
 }
