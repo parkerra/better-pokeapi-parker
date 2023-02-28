@@ -24,11 +24,11 @@ export default function App() {
     const [ pokemon1, setPokemon1 ] = useState("pikachu")
     const [ inputPokemon1, setInputPokemon1 ] = useState("Search for First Pokemon")
     const [ pokemon2, setPokemon2 ] = useState("lucario")
+
     const [ refreshVal, setRefreshVal ] = useState(100000000)
     const [ toggle, setToggle ] = useState(true)
-    // const [ inputPokemon2, setInputPokemon2 ] = useState("Search for Second Pokemon")
+
     const allPokemon = useSWR("/api/allPokemon/", fetcher)
-    // const results = useSWR(`/api/battle/`, getFetcher(pokemon1, pokemon2), { keepPreviousData: false })
     const results = useSWR(`/api/battle/`, getFetcher(pokemon1, pokemon2), { refreshInterval: refreshVal, keepPreviousData: true })
     const currPokemon1 = useSWR("/api/pokemon/" + pokemon1, fetcher)
     const currPokemon2 = useSWR("/api/pokemon/" + pokemon2, fetcher)
@@ -57,7 +57,6 @@ export default function App() {
                             setPokemon2(record.item.value.toLowerCase())
                             setPokemon1(inputPokemon1.toLowerCase())
                             setInputPokemon1("Search for First Pokemon")
-                            // setInputPokemon2("Search for Second Pokemon")
                         }}
                         dontClear={false}
                     />

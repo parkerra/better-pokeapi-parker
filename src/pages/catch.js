@@ -23,8 +23,8 @@ export default function App() {
     const [ pokemon, setPokemon ] = useState("pikachu")
     const [ refreshVal, setRefreshVal ] = useState(100000000)
     const [ toggle, setToggle ] = useState(true)
+
     const allPokemon = useSWR("/api/allPokemon/", fetcher)
-    // const results = useSWR(`/api/catch/`, getFetcher(pokemon), { keepPreviousData: false })
     const results = useSWR(`/api/catch/`, getFetcher(pokemon), { refreshInterval: refreshVal, keepPreviousData: false })
     const currPokemon = useSWR("/api/pokemon/" + pokemon, fetcher)
 

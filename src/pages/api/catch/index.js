@@ -12,7 +12,6 @@ export default async function handler(request, response) {
             const f = (hpMax * 255 * 4) / (hpCurrent * ball)
             
             response.status(200)
-            console.log(f >= N)
 
             return response.send({ caught: f >= N })
 

@@ -13,7 +13,7 @@ export default function Random() {
     if (!data) return (
         <>
             <Link href="/"><h1>Better PokeAPI</h1></Link>
-            <h2>Must Implement your API. Data is empty</h2>
+            <h2>There has been an error! Reload and try again</h2>
         </>
     )
     let { name, sprite, types } = data

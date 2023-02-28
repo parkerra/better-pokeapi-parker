@@ -14,6 +14,7 @@ export default function App() {
     const [ inputPokemon, setInputPokemon ] = useState("Search for Pokemon")
     const [ level, setLevel ] = useState(5)
     const [ inputLevel, setInputLevel ] = useState("")
+
     const allPokemon = useSWR("/api/allPokemon/", fetcher)
     const thisPokemon = useSWR(`/api/experience/${pokemon}?level=${level}`, fetcher)
     const currPokemon = useSWR("/api/pokemon/" + pokemon, fetcher)

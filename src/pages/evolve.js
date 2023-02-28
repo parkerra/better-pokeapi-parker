@@ -12,6 +12,7 @@ const fetcher = async (url) => {
 export default function App() {
     const [ pokemon, setPokemon ] = useState("pikachu")
     const [ evolution, setEvolution ] = useState("raichu")
+
     const allPokemon = useSWR("/api/allPokemon/", fetcher)
     const thisPokemon = useSWR("/api/evolve/" + pokemon, fetcher)
     const currPokemon = useSWR("/api/pokemon/" + pokemon, fetcher)
@@ -47,14 +48,13 @@ export default function App() {
                 <h2>Validating</h2>
             ) : (
                 <>
-                    {/* <a href={"/pokemon/" + thisPokemon["data"]["evolution"]}> */}
-                        <h2>Next Evolution: {
-                            thisPokemon["data"]["evolution"] === pokemon ? (
-                                "Already in most evolved form!"
-                            ) : (
-                                thisPokemon["data"]["evolution"] 
-                            )}</h2>
-                    {/* </a> */}
+                    <h2>Next Evolution: {
+                        thisPokemon["data"]["evolution"] === pokemon ? (
+                            "Already in most evolved form!"
+                        ) : (
+                            thisPokemon["data"]["evolution"] 
+                        )}
+                    </h2>
                 </>
             )}
 
