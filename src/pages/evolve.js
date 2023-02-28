@@ -20,61 +20,65 @@ export default function App() {
 
     return (
         <>
-            <h1><Link href="/">Better PokeAPI</Link></h1>
+            <div class="front-page">
+                <h1><Link href="/" class="title-button">Better PokeAPI</Link></h1>
 
-            {allPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <SearchBox 
-                        dataList={allPokemon["data"]["allPokemon"]}
-                        placeholder="Search for Pokemon"
-                        onSelect={(record) => {
-                            setPokemon(record.item.value.toLowerCase())
-                        }}
-                    />
-                </>
-            )}
-
-            <h2>Name: {pokemon}</h2> 
-
-            {currPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <img src={currPokemon["data"]["sprite"]} width={150}/>
-            )}
-
-            {thisPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <h2>Next Evolution: {
-                        thisPokemon["data"]["evolution"] === pokemon ? (
-                            "Already in most evolved form!"
-                        ) : (
-                            thisPokemon["data"]["evolution"] 
-                        )}
-                    </h2>
-                </>
-            )}
-
-            {nextPokemon["isValidating"] ? (
+                {allPokemon["isValidating"] ? (
                     <h2>Validating</h2>
                 ) : (
                     <>
-                        <button type="button" 
-                            onClick={() => {
-                                setEvolution(thisPokemon["data"]["evolution"])
-                            }}>
-                                Update
-                        </button> 
-                        {nextPokemon["data"]["pokemonName"] !== pokemon ? (
-                            <>
-                                <img src={nextPokemon["data"]["sprite"]} width={150}/>
-                            </>
-                        ) : (null)}
+                        <SearchBox 
+                            dataList={allPokemon["data"]["allPokemon"]}
+                            placeholder="Search for Pokemon"
+                            onSelect={(record) => {
+                                setPokemon(record.item.value.toLowerCase())
+                            }}
+                        />
                     </>
                 )}
+
+                <h2>Name: {pokemon}</h2> 
+
+                {currPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <img src={currPokemon["data"]["sprite"]} width={150}/>
+                )}
+
+                {thisPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <h2>Next Evolution: {
+                            thisPokemon["data"]["evolution"] === pokemon ? (
+                                "Already in most evolved form!"
+                            ) : (
+                                thisPokemon["data"]["evolution"] 
+                            )}
+                        </h2>
+                    </>
+                )}
+
+                {nextPokemon["isValidating"] ? (
+                        <h2>Validating</h2>
+                    ) : (
+                        <>
+                            {nextPokemon["data"]["pokemonName"] !== pokemon ? (
+                                <>
+                                    <img src={nextPokemon["data"]["sprite"]} width={150}/>
+                                </>
+                            ) : (null)}
+
+                            <button type="button" class="update-button"
+                                onClick={() => {
+                                    setEvolution(thisPokemon["data"]["evolution"])
+                                }}>
+                                    Update
+                            </button>
+                        </>
+                    )
+                }
+            </div>
         </>
     )
 }

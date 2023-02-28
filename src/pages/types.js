@@ -16,30 +16,32 @@ export default function App() {
 
     return (
         <>
-            <h1><Link href="/">Better PokeAPI</Link></h1>
+            <div class="front-page">
+                <h1><Link href="/" class="title-button">Better PokeAPI</Link></h1>
 
-            {allTypes["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <SearchBox 
-                        dataList={allTypes["data"]["allTypes"]}
-                        placeholder="Search for Type"
-                        onSelect={(record) => {
-                            setType(record.item.value.toLowerCase())
-                        }}
-                    />
-                </>
-            )}
-            
-            {thisType["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <h2>Type: {type}</h2>
-                    <ul>{thisType["data"]["pokemon"].map(poke => <li>{poke}</li>)}</ul>
-                </>
-            )}
+                {allTypes["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <SearchBox 
+                            dataList={allTypes["data"]["allTypes"]}
+                            placeholder="Search for Type"
+                            onSelect={(record) => {
+                                setType(record.item.value.toLowerCase())
+                            }}
+                        />
+                    </>
+                )}
+                
+                {thisType["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <h2>Type: {type}</h2>
+                        <ul>{thisType["data"]["pokemon"].map(poke => <li>{poke}</li>)}</ul>
+                    </>
+                )}
+            </div>
         </>
     )
 }

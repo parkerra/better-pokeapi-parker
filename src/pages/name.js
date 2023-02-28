@@ -16,31 +16,33 @@ export default function App() {
 
     return (
         <>
-            <h1><Link href="/">Better PokeAPI</Link></h1>
+            <div class="front-page">
+                <h1><Link href="/" class="title-button">Better PokeAPI</Link></h1>
 
-            {allPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <SearchBox 
-                        dataList={allPokemon["data"]["allPokemon"]}
-                        placeholder="Search for Pokemon"
-                        onSelect={(record) => {
-                            setPokemon(record.item.value.toLowerCase())
-                        }}
-                    />
-                </>
-            )}
-            
-            {thisPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <h2>Name: {thisPokemon["data"]["pokemonName"]}</h2>
-                    <img src={thisPokemon["data"]["sprite"]} width={150}/>
-                    <h2>Types: {thisPokemon["data"]["types"].map(type => <span>{type} </span>)}</h2>
-                </>
-            )}
+                {allPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <SearchBox 
+                            dataList={allPokemon["data"]["allPokemon"]}
+                            placeholder="Search for Pokemon"
+                            onSelect={(record) => {
+                                setPokemon(record.item.value.toLowerCase())
+                            }}
+                        />
+                    </>
+                )}
+                
+                {thisPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <h2>Name: {thisPokemon["data"]["pokemonName"]}</h2>
+                        <img src={thisPokemon["data"]["sprite"]} width={150}/>
+                        <h2>Types: {thisPokemon["data"]["types"].map(type => <span>{type} </span>)}</h2>
+                    </>
+                )}
+            </div>
         </>
     )
 }

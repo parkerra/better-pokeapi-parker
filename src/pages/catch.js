@@ -30,54 +30,57 @@ export default function App() {
 
     return (
         <>
-            <Link href="/"><h1>Better PokeAPI</h1></Link>
+            <div class="front-page">
+                <Link href="/" class="title-button"><h1>Better PokeAPI</h1></Link>
 
-            {allPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <SearchBox 
-                        dataList={allPokemon["data"]["allPokemon"]}
-                        placeholder="Search for Pokemon"
-                        onSelect={(record) => {
-                            setPokemon(record.item.value.toLowerCase())
-                        }}
-                    />
-                </>
-            )}
+                {allPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <SearchBox 
+                            dataList={allPokemon["data"]["allPokemon"]}
+                            placeholder="Search for Pokemon"
+                            onSelect={(record) => {
+                                setPokemon(record.item.value.toLowerCase())
+                            }}
+                        />
+                    </>
+                )}
 
-            <h2>Catching: {pokemon}</h2>
+                <h2>Catching: {pokemon}</h2>
 
-            {currPokemon["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <img src={currPokemon["data"]["sprite"]} width={150}/>
-            )}
-            
-            {results["isValidating"] ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    {results["data"]["caught"] ? (
-                        <h2>{pokemon} has been caught!</h2>
-                    ) : (
-                        <h2>{pokemon} broke free!</h2>
-                    )}
-                </>
-            )}
+                {currPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <img src={currPokemon["data"]["sprite"]} width={150}/>
+                )}
+                
+                {results["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        {results["data"]["caught"] ? (
+                            <h2>{pokemon} has been caught!</h2>
+                        ) : (
+                            <h2>{pokemon} broke free!</h2>
+                        )}
+                    </>
+                )}
 
-            <button type="button" 
-                onClick={() => {
-                    if (toggle) {
-                        setRefreshVal(100)
-                        setToggle(false)
-                    } else {
-                        setRefreshVal(10000000)
-                        setToggle(true)
-                    }
-                }}>
-                {toggle ? "Update" : "Stop Updating"}
-            </button>
+                <button type="button" 
+                    class="update-button"
+                    onClick={() => {
+                        if (toggle) {
+                            setRefreshVal(100)
+                            setToggle(false)
+                        } else {
+                            setRefreshVal(10000000)
+                            setToggle(true)
+                        }
+                    }}>
+                    {toggle ? "Update" : "Stop Updating"}
+                </button>
+            </div>
         </>
     )
 }

@@ -12,7 +12,7 @@ export default function Random() {
     if (isLoading) return <div>Loading</div>
     if (!data) return (
         <>
-            <Link href="/"><h1>Better PokeAPI</h1></Link>
+            <Link href="/" class="title-button"><h1>Better PokeAPI</h1></Link>
             <h2>There has been an error! Reload and try again</h2>
         </>
     )
@@ -21,16 +21,18 @@ export default function Random() {
 
     return (
         <>
-            <Link href="/"><h1>Better PokeAPI</h1></Link>
-            {isValidating ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <h2>Name: {name}</h2>
-                    <img src={sprite} />
-                    <h2>Types: {types.map(type => <span>{type} </span>)}</h2>
-                </>
-            )}
+            <div class="front-page">
+                <Link href="/" class="title-button"><h1>Better PokeAPI</h1></Link>
+                {isValidating ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <h2>Name: {name}</h2>
+                        <img src={sprite} width={150} />
+                        <h2>Types: {types.map(type => <span>{type} </span>)}</h2>
+                    </>
+                )}
+            </div>
         </>
     )
 }
