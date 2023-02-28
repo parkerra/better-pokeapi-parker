@@ -2,67 +2,79 @@ import axios from 'axios'
 import useSWR from 'swr'
 import Link from 'next/link'
 import React, { useState } from "react"
+import SearchBox from "./components/searchBox.js"
 
 const fetcher = async (url) => {
     const res = await axios.get(url)
     return res.data
 }
 
-function Evolve(props) {
-    const { data, error, isLoading, isValidating } = useSWR(`/api/evolve/${props.evolution}`, fetcher)
-
-    if (isLoading) return <div>Loading</div>
-    if (!data) return (
-        <>
-            <h2>Invalid Pokemon name!</h2>
-        </>
-    )
-
-    let { evolution } = data
-
-    return (
-        <>
-            <h2>Name: {props.evolution}</h2>
-            {isValidating ? (
-                <h2>Validating</h2>
-            ) : (
-                <>
-                    <h2>Next Evolution: {evolution}</h2>
-                </>
-            )}
-        </>
-    )
-}
-
 export default function App() {
-    const [ evolution, setEvolution ] = useState("pikachu")
-    const [ textInput, setTextInput ] = useState("")
+    const [ pokemon, setPokemon ] = useState("pikachu")
+    const [ evolution, setEvolution ] = useState("raichu")
+    const allPokemon = useSWR("/api/allPokemon/", fetcher)
+    const thisPokemon = useSWR("/api/evolve/" + pokemon, fetcher)
+    const currPokemon = useSWR("/api/pokemon/" + pokemon, fetcher)
+    const nextPokemon = useSWR("/api/pokemon/" + evolution, fetcher)
 
     return (
         <>
             <h1><Link href="/">Better PokeAPI</Link></h1>
 
-            <input type="text" value={textInput}
-                onChange={(event) => {
-                    setTextInput(event.target.value)
-                }}
-                onKeyDown={(event) => {
-                    if (event.key === "Enter") {
-                        setEvolution(textInput.toLowerCase())
-                        setTextInput("")
-                    }
-                }}
-            />
+            {allPokemon["isValidating"] ? (
+                <h2>Validating</h2>
+            ) : (
+                <>
+                    <SearchBox 
+                        dataList={allPokemon["data"]["allPokemon"]}
+                        placeholder="Search for Pokemon"
+                        onSelect={(record) => {
+                            setPokemon(record.item.value.toLowerCase())
+                        }}
+                    />
+                </>
+            )}
 
-            <button type="button" 
-                onClick={() => {
-                    setEvolution(textInput.toLowerCase())
-                    setTextInput("")
-                }}>
-                Search
-            </button>
+            <h2>Name: {pokemon}</h2> 
 
-            { Evolve({ evolution: evolution }) }
+            {currPokemon["isValidating"] ? (
+                <h2>Validating</h2>
+            ) : (
+                <img src={currPokemon["data"]["sprite"]} width={150}/>
+            )}
+
+            {thisPokemon["isValidating"] ? (
+                <h2>Validating</h2>
+            ) : (
+                <>
+                    {/* <a href={"/pokemon/" + thisPokemon["data"]["evolution"]}> */}
+                        <h2>Next Evolution: {
+                            thisPokemon["data"]["evolution"] === pokemon ? (
+                                "Already in most evolved form!"
+                            ) : (
+                                thisPokemon["data"]["evolution"] 
+                            )}</h2>
+                    {/* </a> */}
+                </>
+            )}
+
+            {nextPokemon["isValidating"] ? (
+                    <h2>Validating</h2>
+                ) : (
+                    <>
+                        <button type="button" 
+                            onClick={() => {
+                                setEvolution(thisPokemon["data"]["evolution"])
+                            }}>
+                                Update
+                        </button> 
+                        {nextPokemon["data"]["pokemonName"] !== pokemon ? (
+                            <>
+                                <img src={nextPokemon["data"]["sprite"]} width={150}/>
+                            </>
+                        ) : (null)}
+                    </>
+                )}
         </>
     )
 }

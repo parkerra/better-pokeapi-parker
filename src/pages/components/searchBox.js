@@ -20,7 +20,7 @@ export default function SearchBox(props) {
                     placeholder={props.placeholder}
                     data={data}
                     onSelect={props.onSelect}
-                    clearOnSelect={true}
+                    clearOnSelect={!props.dontClear}
                 />
             </div>
         </>

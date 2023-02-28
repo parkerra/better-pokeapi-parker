@@ -34,3 +34,29 @@ export default async function handler(request, response) {
         }
     }
 }
+            /*
+            while (true) {
+                let toBreak = false
+                console.log("AMONGUS")
+                console.log(evolutionChain)
+
+                for (let i = 0; i < evolutionChain.length; i++) {
+                    if (evolutionChain[i]["species"]["name"] === request.query.name) {
+                        if (evolutionChain[i]["species"]["name"]["evolves_to"].length === 0) {
+                            evolution = request.query.name
+                            toBreak = true
+                            break
+                        } else {
+                            evolution = evolutionChain[0]["evolves_to"]["species"]["name"]
+                            break
+                        }
+                    }
+                }
+
+                if (toBreak) {
+                    break
+                }
+
+                evolutionChain = evolutionChain[0]["evolves_to"]
+            }
+            */
